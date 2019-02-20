@@ -1,0 +1,38 @@
+1. SELECT name from Highschooler WHERE ID IN (SELECT ID1 FROM Friend, Highschooler WHERE name = "Gabriel" AND ID = ID2);        
++-----------+
+| name      |
++-----------+
+| Jordan    |
+| Cassandra |
+| Andrew    |
+| Alexis    |
+| Jessica   |
++-----------+
+5 rows in set (0.00 sec)
+
+2. mysql> SELECT name, grade FROM Highschooler WHERE ID NOT IN (SELECT ID1 FROM Likes) AND ID NOT IN (SELECT ID2 FROM Likes);
++---------+-------+
+| name    | grade |
++---------+-------+
+| Jordan  |     9 |
+| Tiffany |     9 |
+| Logan   |    12 |
++---------+-------+
+3 rows in set (0.00 sec)
+
+3.  SELECT name, grade FROM Likes, Highschooler WHERE ID = ID2 GROUP BY ID2 HAVING COUNT(*) > 1;
++-----------+-------+
+| name      | grade |
++-----------+-------+
+| Kris      |    10 |
+| Cassandra |     9 |
++-----------+-------+
+2 rows in set (0.00 sec)
+
+4. SELECT h1.name, h1.grade, h2.name, h2.grade FROM Highschooler h1, Highschooler h2, Likes L WHERE h1.ID = L.ID1 AND h2.ID = L.ID2 AND (h1.grade - h2.grade) >= 2;   
++------+-------+-------+-------+
+| name | grade | name  | grade |
++------+-------+-------+-------+
+| John |    12 | Haley |    10 |
++------+-------+-------+-------+
+1 row in set (0.01 sec)
